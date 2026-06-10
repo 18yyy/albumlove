@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Editor de Álbum Personalizado</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <span class="brand-mark">PDF</span>
+          <div>
+            <h1>Editor de Álbum</h1>
+            <p>Detecte campos, ajuste no preview e gere os PDFs prontos para impressão.</p>
+          </div>
+        </div>
+
+        <section class="panel">
+          <h2>Arquivos</h2>
+          <label>
+            PDF figurinhas
+            <input id="figurinhasPdf" value="Figurinhas.pdf" />
+          </label>
+          <label>
+            PDF álbum oficial
+            <input id="albumPdf" value="Álbum Oficial - Nosso Amor.pdf" />
+          </label>
+          <label>
+            Pasta de fotos
+            <input id="photosFolder" value="fotos" />
+          </label>
+          <label>
+            Enviar fotos desta sessão
+            <input id="sessionPhotosInput" type="file" accept="image/*" multiple />
+          </label>
+          <button id="uploadSessionPhotosBtn" class="secondary small" type="button">Carregar fotos no site</button>
+          <div class="status-line" id="assetStatus">Lendo arquivos locais...</div>
+        </section>
+
+        <section class="panel compact-panel">
+          <h2>Atalhos</h2>
+          <div class="shortcut-grid">
+            <span>Del</span><strong>apagar campo</strong>
+            <span>Setas</span><strong>mover 1 ponto</strong>
+            <span>Shift + setas</span><strong>mover 10 pontos</strong>
+            <span>R</span><strong>girar 15 graus</strong>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2>Dados</h2>
+          <label>
+            Nome da pessoa 1
+            <input id="person1" placeholder="Nome 1" />
+          </label>
+          <label>
+            Nome da pessoa 2
+            <input id="person2" placeholder="Nome 2" />
+          </label>
+          <label>
+            Data do namoro
+            <input id="date" placeholder="DD/MM/AAAA" />
+          </label>
+          <label>
+            Texto personalizado
+            <textarea id="customText" rows="4" placeholder="Mensagem curta para capa ou campo de texto"></textarea>
+          </label>
+        </section>
+
+        <section class="actions">
+          <button id="analyzeBtn">Analisar PDFs</button>
+          <button id="saveBtn" class="secondary">Salvar Template</button>
+          <button id="baseBtn" class="secondary">Gerar PDF Base Editável</button>
+          <button id="generateBtn">Gerar PDFs</button>
+          <a id="downloadBtn" class="download disabled" href="#">Baixar PDFs Finalizados</a>
+        </section>
+      </aside>
+
+      <section class="workspace">
+        <header class="toolbar">
+          <div class="tabs">
+            <button class="tab active" data-pdf="figurinhas">Figurinhas</button>
+            <button class="tab" data-pdf="album">Álbum</button>
+          </div>
+          <div class="tools">
+            <button id="prevPage" class="icon-button" title="Página anterior">‹</button>
+            <span id="pageLabel">Página 1</span>
+            <button id="nextPage" class="icon-button" title="Próxima página">›</button>
+            <button id="rotateLeftBtn" class="icon-button" title="Girar campo para esquerda">↺</button>
+            <button id="rotateRightBtn" class="icon-button" title="Girar campo para direita">↻</button>
+            <button id="deleteFieldBtn" class="icon-button danger-icon" title="Apagar campo selecionado">Del</button>
+            <label class="zoom-control">
+              <span id="zoomValue">120%</span>
+              <input id="zoom" type="range" min="0.7" max="2.2" step="0.1" value="1.2" />
+            </label>
+          </div>
+        </header>
+
+        <div class="canvas-row">
+          <div class="preview-wrap">
+            <div id="previewStage" class="preview-stage">
+              <img id="previewImage" alt="Preview do PDF" />
+              <div id="overlay"></div>
+            </div>
+            <div id="emptyState" class="empty-state">
+              <strong>Nenhum template carregado.</strong>
+              <span>Clique em Analisar PDFs para detectar imagens do modelo e criar campos editáveis.</span>
+            </div>
+            <div class="canvas-hint">Scroll: zoom · botão do meio/espaço: mover · Shift + scroll: lateral</div>
+          </div>
+
+          <aside class="inspector">
+            <div class="inspector-head">
+              <div>
+                <h2>Campo selecionado</h2>
+                <p id="fieldCount" class="microcopy">0 campos nesta página</p>
+              </div>
+              <div class="inspector-actions">
+                <button id="duplicateFieldBtn" class="secondary small">Duplicar</button>
+                <button id="addFieldBtn" class="secondary small">Adicionar</button>
+              </div>
+            </div>
+            <div id="fieldForm" class="field-form muted">Selecione uma caixa no preview.</div>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <div id="toast" class="toast"></div>
+    <script src="/app.js"></script>
+  </body>
+</html>
